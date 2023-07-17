@@ -12,7 +12,9 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 @ContextConfiguration(classes = {EndpointConfig.class})
 public class DuckActionClients extends TestNGCitrusSpringSupport {
+
     @Autowired
+    //почему не private? ведь дальше этого класса данное поле не используется?
     protected HttpClient yellowDuckService;
 
     public void duckFly(TestCaseRunner runner, String id) {
