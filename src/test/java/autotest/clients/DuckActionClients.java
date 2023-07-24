@@ -2,9 +2,14 @@ package autotest.clients;
 
 import autotest.EndpointConfig;
 import com.consol.citrus.TestCaseRunner;
+import com.consol.citrus.message.MessageType;
+import com.consol.citrus.message.builder.ObjectMappingPayloadBuilder;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.jfr.Description;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;;
 import org.springframework.test.context.ContextConfiguration;
 import com.consol.citrus.http.client.HttpClient;
 
@@ -52,6 +57,33 @@ public class DuckActionClients extends TestNGCitrusSpringSupport {
                 .send()
                 .get("/api/duck/action/swim")
                 .queryParam("id", id));
+    }
+
+    @Description("Валидация полученного ответа (String)")
+    public void validateResponseString(TestCaseRunner runner, String response) {
+        runner.$(http().client(yellowDuckService)
+                .receive()
+                .response(HttpStatus.OK)
+                .message().type(MessageType.JSON)
+                .body(response));
+    }
+
+    @Description("Валидация полученного ответа (из папки Resources)")
+    public void validateResponseResourcesFolder(TestCaseRunner runner, String expectedResources) {
+        runner.$(http().client(yellowDuckService)
+                .receive()
+                .response(HttpStatus.OK)
+                .message().type(MessageType.JSON)
+                .body(new ClassPathResource(expectedResources)));
+    }
+
+    @Description("Валидация полученного ответа (из папки Payload)")
+    public void validateResponsePayloadFolder(TestCaseRunner runner, String expectedPayload) {
+        runner.$(http().client(yellowDuckService)
+                .receive()
+                .response(HttpStatus.OK)
+                .message().type(MessageType.JSON)
+                .body(new ObjectMappingPayloadBuilder(expectedPayload, new ObjectMapper())));
     }
 }
 
