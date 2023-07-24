@@ -8,8 +8,11 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(fluent = true)
-public class ResponseFlyAndSwimAndDeleteAndUpdate {
+
+public class ResponseMessage {
 
     @JsonProperty
     private String message;
 }
+
+
