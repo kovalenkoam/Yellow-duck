@@ -2,7 +2,11 @@ package autotest.clients;
 
 import autotest.BaseTest;
 import com.consol.citrus.TestCaseRunner;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+
+import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class DuckClients extends BaseTest {
 
@@ -23,6 +27,19 @@ public class DuckClients extends BaseTest {
 
     public void duckCreate(TestCaseRunner runner, Object response){
         sendPostRequest(runner, yellowDuckService, "/api/duck/create", response);
+    }
+
+    public void duckCreate(TestCaseRunner runner, String body){
+        sendPostRequest(runner, yellowDuckService, "/api/duck/create", body);
+    }
+
+    public void duckCreateResources(TestCaseRunner runner, String expectedResources){
+        runner.$(http()
+                .client(yellowDuckService)
+                .send()
+                .post("/api/duck/create")
+                .message().contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(new ClassPathResource(expectedResources)));
     }
 
     public void duckDelete(TestCaseRunner runner,
@@ -54,7 +71,33 @@ public class DuckClients extends BaseTest {
                 "wingsState", wingsState);
     }
 
-    public void validateResponse(TestCaseRunner runner, String response) {
-        validateResponse2(runner, yellowDuckService, HttpStatus.OK, response);
+    public void duckFly(TestCaseRunner runner, String id) {
+        sendGetRequest(runner, yellowDuckService,
+                "/api/duck/action/fly",
+                "id", id);
+    }
+
+    public void duckSwim(TestCaseRunner runner, String id) {
+        sendGetRequest(runner, yellowDuckService,
+                "/api/duck/action/swim",
+                "id", id);
+    }
+
+    public void duckQuack(TestCaseRunner runner,
+                          String id,
+                          String repetitionCount,
+                          String soundCount) {
+        sendGetRequest(runner, yellowDuckService,
+                "/api/duck/action/quack",
+                "id", id,
+                "repetitionCount", repetitionCount,
+                "soundCount", soundCount);
+    }
+
+    public void duckShowProperties(TestCaseRunner runner,
+                                   String id) {
+        sendGetRequest(runner, yellowDuckService,
+                "/api/duck/action/properties",
+                "id", id);
     }
 }

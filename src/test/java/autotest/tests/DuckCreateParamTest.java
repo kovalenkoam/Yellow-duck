@@ -6,6 +6,7 @@ import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.testng.CitrusParameters;
+import org.springframework.http.HttpStatus;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
@@ -49,7 +50,8 @@ public class DuckCreateParamTest extends DuckClients {
 
     public void createDuckList(Object payloads, String response, @Optional @CitrusResource TestCaseRunner runner) {
         duckCreate(runner,payloads);
-        validateResponse(runner, response);
+        validateResponseFromResources(runner, yellowDuckService, HttpStatus.OK, response);
+        duckDelete(runner, "${duckId}");
     }
 
     @DataProvider(name = "duckList")

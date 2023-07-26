@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 
+import static com.consol.citrus.dsl.MessageSupport.MessageBodySupport.fromBody;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 @ContextConfiguration(classes = {EndpointConfig.class})
@@ -83,8 +84,8 @@ public class BaseTest extends TestNGCitrusSpringSupport {
                                   HttpClient URL,
                                   String path,
                                   String nameQueryParam, String valueQueryParam ) {
-        runner.$(http().
-                client(URL)
+        runner.$(http()
+                .client(URL)
                 .send()
                 .delete(path)
                 .queryParam(nameQueryParam, valueQueryParam));
@@ -111,10 +112,10 @@ public class BaseTest extends TestNGCitrusSpringSupport {
                 .queryParam(nameQueryParam5, valueQueryParam5));
     }
 
-    protected void validateResponse1 (TestCaseRunner runner,
-                                     HttpClient URL,
-                                     HttpStatus status,
-                                     String body) {
+    protected void validateResponseFromBody(TestCaseRunner runner,
+                                            HttpClient URL,
+                                            HttpStatus status,
+                                            String body) {
         runner.$(http()
                 .client(URL)
                 .receive()
@@ -123,27 +124,38 @@ public class BaseTest extends TestNGCitrusSpringSupport {
                 .body(body));
     }
 
-    protected void validateResponse2 (TestCaseRunner runner,
-                                     HttpClient URL,
-                                     HttpStatus status,
-                                     String expectedResources) {
+    protected void validateResponseFromResources(TestCaseRunner runner,
+                                                 HttpClient URL,
+                                                 HttpStatus status,
+                                                 String expectedResources) {
         runner.$(http()
                 .client(URL)
                 .receive()
                 .response(status)
                 .message().type(MessageType.JSON)
-                .body(new ClassPathResource(expectedResources)));
+                .body(new ClassPathResource(expectedResources))
+                .extract(fromBody().expression("$.id", "duckId")));
     }
 
-    protected void validateResponse3 (TestCaseRunner runner,
-                                     HttpClient URL,
-                                     HttpStatus status,
-                                     String expectedPayload) {
+    protected void validateResponseFromPayload(TestCaseRunner runner,
+                                               HttpClient URL,
+                                               HttpStatus status,
+                                               String expectedPayload) {
         runner.$(http()
                 .client(URL)
                 .receive()
                 .response(status)
                 .message().type(MessageType.JSON)
                 .body(new ObjectMappingPayloadBuilder(expectedPayload, new ObjectMapper())));
+    }
+
+    protected void extractDataFromResponse(TestCaseRunner runner,
+                                           HttpClient URL) {
+        runner.$(http()
+                .client(URL)
+                .receive()
+                .response()
+                .message()
+                .extract(fromBody().expression("$.id", "duckId")));
     }
 }
