@@ -9,8 +9,7 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
 public class DuckFlyTest extends DuckClients{
-
-    @Test(description = "Проверка успешного взлета уточки с WingState = Active")
+    @Test(description = "Проверка успешного взлета уточки с WingState = ACTIVE")
     @CitrusTest
     public void successfulFly(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "ACTIVE");
@@ -20,7 +19,7 @@ public class DuckFlyTest extends DuckClients{
         duckDelete(runner, "${duckId}");
     }
 
-    @Test(description = "Проверка успешного взлета уточки с WingState = Active")
+    @Test(description = "Проверка успешного взлета уточки с WingState = FIXED")
     @CitrusTest
     public void successfulNotFly(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "FIXED");

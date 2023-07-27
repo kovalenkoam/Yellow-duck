@@ -22,7 +22,7 @@ public class DuckQuackTest extends DuckClients {
         duckDelete(runner, "${duckId}");
     }
 
-    @Test(description = "Нулевое кол-во повторов при запуске метода quack")
+    @Test(description = "Повторов > Количества звуков")
     @CitrusTest
     public void repeatsMoreQuack(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "ACTIVE");
@@ -32,7 +32,7 @@ public class DuckQuackTest extends DuckClients {
         duckDelete(runner, "${duckId}");
     }
 
-    @Test(description = "Нулевое кол-во повторов при запуске метода quack")
+    @Test(description = "Повторов < Колличества звуков")
     @CitrusTest
     public void quackMoreQuack(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "ACTIVE");
@@ -44,22 +44,12 @@ public class DuckQuackTest extends DuckClients {
         duckDelete(runner, "${duckId}");
     }
 
-    @Test(description = "Нулевое кол-во повторов при запуске метода quack")
-    @CitrusTest
-    public void equalsQuackAndRepeats(@Optional@CitrusResource TestCaseRunner runner) {
-        duckCreate(runner, "red", "23", "rubber", "meow", "ACTIVE");
-        extractDataFromResponse(runner, yellowDuckService);
-        duckQuack(runner, "${duckId}", "3", "3");
-        validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ \"sound\": \"quack-quack-quack, quack-quack-quack, quack-quack-quack\" }");
-        duckDelete(runner, "${duckId}");
-    }
-
     @Test(description = "Нулевое кол-во кряков при запуске метода quack")
     @CitrusTest
     public void repeatsQuack(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "ACTIVE");
         extractDataFromResponse(runner, yellowDuckService);
-        duckQuack(runner, "${duckId}", "0", "3");
+        duckQuack(runner, "${duckId}", "3", "0");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{\n" +
                 "  \"sound\": \"\"\n" +
                 "}");

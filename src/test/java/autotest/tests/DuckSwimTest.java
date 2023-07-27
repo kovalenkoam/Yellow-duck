@@ -9,7 +9,6 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
 public class DuckSwimTest extends DuckClients {
-
     @Test(description = "Проверка успешного плаванья уточки")
     @CitrusTest
     public void successfulSwim(@Optional@CitrusResource TestCaseRunner runner) {

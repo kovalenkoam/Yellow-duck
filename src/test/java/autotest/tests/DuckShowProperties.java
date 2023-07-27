@@ -12,7 +12,7 @@ public class DuckShowProperties extends DuckClients {
 
 
 
-    @Test(description = "Успешный показ проперти утки c wingsState: FIXED")
+    @Test(description = "Успешный показ проперти утки c wingsState: ACTIVE")
     @CitrusTest
     public void duckShowProperties1(@Optional@CitrusResource TestCaseRunner runner) {
 
@@ -34,7 +34,7 @@ public class DuckShowProperties extends DuckClients {
         duckDelete(runner,"${duckId}");
     }
 
-    @Test(description = "Успешный показ проперти утки c wingsState: FIXED")
+    @Test(description = "Успешный показ проперти утки c wingsState: UNDEFINED")
     @CitrusTest
     public void duckShowProperties3(@Optional@CitrusResource TestCaseRunner runner) {
 

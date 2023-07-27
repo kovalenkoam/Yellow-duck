@@ -44,7 +44,7 @@ public class DuckCreateParamTest extends DuckClients {
             .sound("quack")
             .wingsState("ACTIVE");
 
-    @Test(dataProvider = "duckList")
+    @Test(dataProvider = "duckList", description = "Параметризированный тест создания уточки")
     @CitrusTest
     @CitrusParameters({"payload", "response", "runner"})
 

@@ -3,7 +3,6 @@ package autotest.clients;
 import autotest.BaseTest;
 import com.consol.citrus.TestCaseRunner;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;

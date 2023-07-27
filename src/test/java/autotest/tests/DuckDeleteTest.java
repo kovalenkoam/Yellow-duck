@@ -21,11 +21,11 @@ public class DuckDeleteTest extends DuckClients {
                 "}");
     }
 
-    @Test(description = "Успешное удаление уточки")
+    @Test(description = "Удаление несуществующей уточки")
     @CitrusTest
     public void notFoundIdDelete(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreateResources(runner, "createDuckProperties.json");
-        //id несуществующей уточки
+        //99999 - id несуществующей уточки
         duckDelete(runner, "99999");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ \n" +
                 "\"message\": \"Duck with id = 99999 is not found\" \n" +

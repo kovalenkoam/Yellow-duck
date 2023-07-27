@@ -9,7 +9,6 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
 public class DuckCreateTest extends DuckClients {
-
     @Test(description = "Успешное создание уточки")
     @CitrusTest
     public void successfulCreate(@Optional @CitrusResource TestCaseRunner runner){
