@@ -1,6 +1,7 @@
 package autotest.tests;
 
 import autotest.clients.DuckClients;
+import autotest.payloads.ResponseMessage;
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
@@ -9,16 +10,17 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
 public class DuckUpdateTest extends DuckClients {
+
+    ResponseMessage responseMessage = new ResponseMessage().message("Duck with id = ${duckId} is updated");
+
     @Test(description = "Проверка изменения характеристик уточки")
     @CitrusTest
 
-    public void successfulUpdate(@Optional @CitrusResource TestCaseRunner runner) {
+    public void successfulUpdate(Object payloads, @Optional @CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "green", "11.0", "plastic", "quack", "FIXED");
         extractDataFromResponse(runner, yellowDuckService);
         duckUpdate(runner, "${duckId}", "red", "12.0","wood", "meow", "ACTIVE");
-        validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{\n" +
-                "  \"message\": \"Duck with id = ${duckId} is updated\"\n" +
-                "}");
+        validateResponseFromPayload(runner, yellowDuckService, HttpStatus.OK, responseMessage );
         duckDelete(runner, "${duckId}");
     }
 }

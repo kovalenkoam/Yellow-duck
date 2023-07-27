@@ -139,7 +139,7 @@ public class BaseTest extends TestNGCitrusSpringSupport {
     protected void validateResponseFromPayload(TestCaseRunner runner,
                                                HttpClient URL,
                                                HttpStatus status,
-                                               String expectedPayload) {
+                                               Object expectedPayload) {
         runner.$(http()
                 .client(URL)
                 .receive()
