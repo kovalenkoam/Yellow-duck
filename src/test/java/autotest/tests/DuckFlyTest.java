@@ -13,9 +13,9 @@ public class DuckFlyTest extends DuckClients{
     @CitrusTest
     public void successfulFly(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "ACTIVE");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckFly(runner, "${duckId}");
-        validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ “message”: “I’m flying”}" );
+        validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "\"message\": \"I’m flying\"" );
         duckDelete(runner, "${duckId}");
     }
 
@@ -23,7 +23,7 @@ public class DuckFlyTest extends DuckClients{
     @CitrusTest
     public void successfulNotFly(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "FIXED");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckFly(runner, "${duckId}");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ “message”: “I can’t fly”}" );
         duckDelete(runner, "${duckId}");

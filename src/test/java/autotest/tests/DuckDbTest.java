@@ -23,7 +23,7 @@ public class DuckDbTest extends DuckClients {
     @CitrusTest
     public void successfulCreate(@Optional @CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "green", "10.0", "wood", "muamua", "ACTIVE");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         validateDuckInDatabase(runner, "${duckId}", "green", "10.0", "wood", "muamua", "ACTIVE");
         duckDelete(runner);
     }
@@ -40,7 +40,7 @@ public class DuckDbTest extends DuckClients {
     @CitrusTest
     public void successfulUpdate(@Optional @CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "green", "11.0", "plastic", "quack", "FIXED");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckUpdate(runner, "${duckId}", "red", "12.0", "wood", "meow", "ACTIVE");
         validateDuckInDatabase(runner, "${duckId}", "red", "12.0", "wood", "meow", "ACTIVE");
         duckDelete(runner, "${duckId}");

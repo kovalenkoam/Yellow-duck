@@ -37,12 +37,7 @@ public class DuckClients extends BaseTest {
     }
 
     public void duckCreateResources(TestCaseRunner runner, String expectedResources){
-        runner.$(http()
-                .client(yellowDuckService)
-                .send()
-                .post("/api/duck/create")
-                .message().contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(new ClassPathResource(expectedResources)));
+        sendPostRequestFromResources(runner, yellowDuckService, "/api/duck/create", expectedResources );
     }
 
     public void duckDelete(TestCaseRunner runner,

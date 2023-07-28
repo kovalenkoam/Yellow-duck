@@ -21,7 +21,7 @@ public class DuckGetAllIdsTest extends DuckClients {
     @CitrusTest
     public void successfulGetAllIds(@Optional @CitrusResource TestCaseRunner runner) {
         duckCreateResources(runner, "createDuckProperties.json");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckGetAllIds(runner);
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "[\n" +
                 "    ${duckId}\n" +

@@ -14,7 +14,7 @@ public class DuckDeleteTest extends DuckClients {
     @CitrusTest
     public void successfulDelete(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreateResources(runner, "createDuckProperties.json");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckDelete(runner, "${duckId}");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{\n" +
                 "  \"message\": \"Duck is deleted\"\n" +
@@ -24,8 +24,6 @@ public class DuckDeleteTest extends DuckClients {
     @Test(description = "Удаление несуществующей уточки")
     @CitrusTest
     public void notFoundIdDelete(@Optional@CitrusResource TestCaseRunner runner) {
-        duckCreateResources(runner, "createDuckProperties.json");
-        //99999 - id несуществующей уточки
         duckDelete(runner, "99999");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ \n" +
                 "\"message\": \"Duck with id = 99999 is not found\" \n" +

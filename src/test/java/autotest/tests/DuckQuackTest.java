@@ -14,7 +14,7 @@ public class DuckQuackTest extends DuckClients {
     @CitrusTest
     public void noRepeatsQuack(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "FIXED");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckQuack(runner, "${duckId}", "0", "2");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{\n" +
                 "  \"sound\": \"\"\n" +
@@ -26,9 +26,9 @@ public class DuckQuackTest extends DuckClients {
     @CitrusTest
     public void repeatsMoreQuack(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "ACTIVE");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckQuack(runner, "${duckId}", "3", "2");
-        validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ “sound”: “quack-quack, quack-quack, quack-quack” }");
+        validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ \"sound\": \"quack-quack, quack-quack, quack-quack\" }");
         duckDelete(runner, "${duckId}");
     }
 
@@ -36,7 +36,7 @@ public class DuckQuackTest extends DuckClients {
     @CitrusTest
     public void quackMoreQuack(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "ACTIVE");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckQuack(runner, "${duckId}", "2", "3");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{\n" +
                 "  \"sound\": \"quack-quack-quack, quack-quack-quack\"\n" +
@@ -48,7 +48,7 @@ public class DuckQuackTest extends DuckClients {
     @CitrusTest
     public void repeatsQuack(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "red", "23", "rubber", "meow", "ACTIVE");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckQuack(runner, "${duckId}", "3", "0");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{\n" +
                 "  \"sound\": \"\"\n" +

@@ -17,7 +17,7 @@ public class DuckShowProperties extends DuckClients {
     public void duckShowProperties1(@Optional@CitrusResource TestCaseRunner runner) {
 
         duckCreate(runner, "{ \"color\": \"yellow\", \"height\": 0.01, \"material\": \"rubber\", \"sound\": \"quack\", \"wingsState\": \"ACTIVE\" }");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckShowProperties(runner, "${duckId}");
         validateResponseFromBody(runner, yellowDuckService,HttpStatus.OK,"{ \"color\": \"yellow\", \"height\": 0.01, \"material\": \"rubber\", \"sound\": \"quack\", \"wingsState\": \"ACTIVE\" }");
         duckDelete(runner,"${duckId}");
@@ -28,7 +28,7 @@ public class DuckShowProperties extends DuckClients {
     public void duckShowProperties2(@Optional@CitrusResource TestCaseRunner runner) {
 
         duckCreate(runner, "{ \"color\": \"yellow\", \"height\": 0.01, \"material\": \"rubber\", \"sound\": \"quack\", \"wingsState\": \"FIXED\" }");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckShowProperties(runner, "${duckId}");
         validateResponseFromBody(runner, yellowDuckService,HttpStatus.OK,"{ \"color\": \"yellow\", \"height\": 0.01, \"material\": \"rubber\", \"sound\": \"quack\", \"wingsState\": \"FIXED\" }");
         duckDelete(runner,"${duckId}");
@@ -39,7 +39,7 @@ public class DuckShowProperties extends DuckClients {
     public void duckShowProperties3(@Optional@CitrusResource TestCaseRunner runner) {
 
         duckCreate(runner, "{ \"color\": \"yellow\", \"height\": 0.01, \"material\": \"rubber\", \"sound\": \"quack\", \"wingsState\": \"UNDEFINED\" }");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckShowProperties(runner, "${duckId}");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ \"color\": \"yellow\", \"height\": 0.01, \"material\": \"rubber\", \"sound\": \"quack\", \"wingsState\": \"UNDEFINED\" }");
         duckDelete(runner, "${duckId}");
@@ -50,7 +50,7 @@ public class DuckShowProperties extends DuckClients {
     public void duckNoRubberShowProperties3(@Optional@CitrusResource TestCaseRunner runner) {
 
         duckCreate(runner, "{ \"color\": \"yellow\", \"height\": 0.01, \"material\": \"wood\", \"sound\": \"quack\", \"wingsState\": \"FIXED\" }");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckShowProperties(runner, "${duckId}");
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ \"color\": \"yellow\", \"height\": 0.01, \"material\": \"rubber\", \"wood\": \"quack\", \"wingsState\": \"FIXED\" }");
         duckDelete(runner, "${duckId}");

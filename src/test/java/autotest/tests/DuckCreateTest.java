@@ -13,7 +13,7 @@ public class DuckCreateTest extends DuckClients {
     @CitrusTest
     public void successfulCreate(@Optional @CitrusResource TestCaseRunner runner){
         duckCreate(runner, "green", "10.0", "wood", "muamua", "ACTIVE");
-        validateResponseFromResources(runner, yellowDuckService, HttpStatus.OK, "getDuckProperties/duckGreenProperties2.json");
+        validateResponseFromResourcesAndExtractId(runner, yellowDuckService, HttpStatus.OK, "getDuckProperties/duckGreenProperties2.json");
         duckDelete(runner, "$duckId");
     }
 

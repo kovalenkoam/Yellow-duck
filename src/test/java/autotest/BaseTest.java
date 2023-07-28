@@ -82,6 +82,17 @@ public class BaseTest extends TestNGCitrusSpringSupport {
                 .message().contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(body));
     }
+    protected void sendPostRequestFromResources(TestCaseRunner runner,
+                                   HttpClient URL,
+                                   String path,
+                                   String expectedResources) {
+        runner.$(http()
+                .client(URL)
+                .send()
+                .post(path)
+                .message().contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(new ClassPathResource(expectedResources)));
+    }
 
     protected void sendDeleteRequest(TestCaseRunner runner,
                                   HttpClient URL,
@@ -127,10 +138,10 @@ public class BaseTest extends TestNGCitrusSpringSupport {
                 .body(body));
     }
 
-    protected void validateResponseFromResources(TestCaseRunner runner,
-                                                 HttpClient URL,
-                                                 HttpStatus status,
-                                                 String expectedResources) {
+    protected void validateResponseFromResourcesAndExtractId(TestCaseRunner runner,
+                                                             HttpClient URL,
+                                                             HttpStatus status,
+                                                             String expectedResources) {
         runner.$(http()
                 .client(URL)
                 .receive()
@@ -152,8 +163,8 @@ public class BaseTest extends TestNGCitrusSpringSupport {
                 .body(new ObjectMappingPayloadBuilder(expectedPayload, new ObjectMapper())));
     }
 
-    protected void extractDataFromResponse(TestCaseRunner runner,
-                                           HttpClient URL) {
+    protected void extractIdFromResponse(TestCaseRunner runner,
+                                         HttpClient URL) {
         runner.$(http()
                 .client(URL)
                 .receive()
