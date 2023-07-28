@@ -10,9 +10,10 @@ import org.testng.annotations.Test;
 
 public class DuckGetAllIdsTest extends DuckClients {
 
-    @Test(description = "Проверка метода, когда заранее созданных уточек нет")
+    @Test(description = "Проверка метода, когда заранее созданных уточек нет с предварительным удалением через БД")
     @CitrusTest
     public void notFoundGetAllIds(@Optional @CitrusResource TestCaseRunner runner) {
+        cleanDatabase(runner);
         duckGetAllIds(runner);
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "[]");
     }
@@ -21,7 +22,7 @@ public class DuckGetAllIdsTest extends DuckClients {
     @CitrusTest
     public void successfulGetAllIds(@Optional @CitrusResource TestCaseRunner runner) {
         duckCreateResources(runner, "createDuckProperties.json");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckGetAllIds(runner);
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "[\n" +
                 "    ${duckId}\n" +

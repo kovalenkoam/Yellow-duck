@@ -50,7 +50,7 @@ public class DuckCreateParamTest extends DuckClients {
 
     public void createDuckList(Object payloads, String response, @Optional @CitrusResource TestCaseRunner runner) {
         duckCreate(runner,payloads);
-        validateResponseFromResources(runner, yellowDuckService, HttpStatus.OK, response);
+        validateResponseFromResourcesAndExtractId(runner, yellowDuckService, HttpStatus.OK, response);
         duckDelete(runner, "${duckId}");
     }
 

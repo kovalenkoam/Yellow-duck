@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import org.springframework.test.context.ContextConfiguration;
 import static com.consol.citrus.dsl.MessageSupport.MessageBodySupport.fromBody;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
@@ -19,6 +20,9 @@ public class BaseTest extends TestNGCitrusSpringSupport {
 
     @Autowired
     protected HttpClient yellowDuckService;
+
+    @Autowired
+    protected SingleConnectionDataSource db;
 
     protected void sendGetRequest(TestCaseRunner runner,
                                   HttpClient URL,
@@ -78,6 +82,17 @@ public class BaseTest extends TestNGCitrusSpringSupport {
                 .message().contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(body));
     }
+    protected void sendPostRequestFromResources(TestCaseRunner runner,
+                                   HttpClient URL,
+                                   String path,
+                                   String expectedResources) {
+        runner.$(http()
+                .client(URL)
+                .send()
+                .post(path)
+                .message().contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(new ClassPathResource(expectedResources)));
+    }
 
     protected void sendDeleteRequest(TestCaseRunner runner,
                                   HttpClient URL,
@@ -123,10 +138,10 @@ public class BaseTest extends TestNGCitrusSpringSupport {
                 .body(body));
     }
 
-    protected void validateResponseFromResources(TestCaseRunner runner,
-                                                 HttpClient URL,
-                                                 HttpStatus status,
-                                                 String expectedResources) {
+    protected void validateResponseFromResourcesAndExtractId(TestCaseRunner runner,
+                                                             HttpClient URL,
+                                                             HttpStatus status,
+                                                             String expectedResources) {
         runner.$(http()
                 .client(URL)
                 .receive()
@@ -148,8 +163,8 @@ public class BaseTest extends TestNGCitrusSpringSupport {
                 .body(new ObjectMappingPayloadBuilder(expectedPayload, new ObjectMapper())));
     }
 
-    protected void extractDataFromResponse(TestCaseRunner runner,
-                                           HttpClient URL) {
+    protected void extractIdFromResponse(TestCaseRunner runner,
+                                         HttpClient URL) {
         runner.$(http()
                 .client(URL)
                 .receive()

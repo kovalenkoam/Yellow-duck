@@ -2,10 +2,9 @@ package autotest.clients;
 
 import autotest.BaseTest;
 import com.consol.citrus.TestCaseRunner;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
 
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static com.consol.citrus.actions.ExecuteSQLAction.Builder.sql;
+import static com.consol.citrus.actions.ExecuteSQLQueryAction.Builder.query;
 
 public class DuckClients extends BaseTest {
 
@@ -33,12 +32,7 @@ public class DuckClients extends BaseTest {
     }
 
     public void duckCreateResources(TestCaseRunner runner, String expectedResources){
-        runner.$(http()
-                .client(yellowDuckService)
-                .send()
-                .post("/api/duck/create")
-                .message().contentType(MediaType.APPLICATION_JSON_VALUE)
-                .body(new ClassPathResource(expectedResources)));
+        sendPostRequestFromResources(runner, yellowDuckService, "/api/duck/create", expectedResources );
     }
 
     public void duckDelete(TestCaseRunner runner,
@@ -99,4 +93,34 @@ public class DuckClients extends BaseTest {
                 "/api/duck/action/properties",
                 "id", id);
     }
+
+    public void duckDelete(TestCaseRunner runner) {
+        runner.$(sql(db)
+                .statement("DELETE FROM DUCK WHERE ID=${duckId}"));
+    }
+
+    public void defaultDuckCreate(TestCaseRunner runner) {
+        runner.$(sql(db)
+                .statement("INSERT INTO DUCK VALUES (${duckId}, 'green', 10.0, 'wood', 'gav','ACTIVE')"));
+    }
+
+    public void validateDuckInDatabase(TestCaseRunner runner, String id,
+                                       String color,
+                                       String height,
+                                       String material,
+                                       String sound,
+                                       String wingsState) {
+        runner.$(query(db)
+                .statement("SELECT * FROM DUCK WHERE ID=" + id)
+                .validate("COLOR", color)
+                .validate("HEIGHT", height)
+                .validate("MATERIAL", material)
+                .validate("SOUND", sound)
+                .validate("WINGS_STATE", wingsState));
+    }
+
+    public void cleanDatabase(TestCaseRunner runner) {
+        runner.$(sql(db)
+                .statement("DELETE FROM DUCK"));
+}
 }

@@ -13,9 +13,9 @@ public class DuckSwimTest extends DuckClients {
     @CitrusTest
     public void successfulSwim(@Optional@CitrusResource TestCaseRunner runner) {
         duckCreateResources(runner, "createDuckProperties.json");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckSwim(runner, "${duckId}");
-        validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ “message”: “I’m swimming”}");
+        validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "{ \"message\": \"I’m swimming\"}");
         duckDelete(runner, "${duckId}");
     }
 }

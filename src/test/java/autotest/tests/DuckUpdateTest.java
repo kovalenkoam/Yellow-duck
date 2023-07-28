@@ -18,7 +18,7 @@ public class DuckUpdateTest extends DuckClients {
 
     public void successfulUpdate(Object payloads, @Optional @CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "green", "11.0", "plastic", "quack", "FIXED");
-        extractDataFromResponse(runner, yellowDuckService);
+        extractIdFromResponse(runner, yellowDuckService);
         duckUpdate(runner, "${duckId}", "red", "12.0","wood", "meow", "ACTIVE");
         validateResponseFromPayload(runner, yellowDuckService, HttpStatus.OK, responseMessage );
         duckDelete(runner, "${duckId}");
