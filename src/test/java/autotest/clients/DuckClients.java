@@ -2,14 +2,9 @@ package autotest.clients;
 
 import autotest.BaseTest;
 import com.consol.citrus.TestCaseRunner;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
 
 import static com.consol.citrus.actions.ExecuteSQLAction.Builder.sql;
 import static com.consol.citrus.actions.ExecuteSQLQueryAction.Builder.query;
-import static com.consol.citrus.container.FinallySequence.Builder.doFinally;
-
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class DuckClients extends BaseTest {
 
@@ -124,7 +119,7 @@ public class DuckClients extends BaseTest {
                 .validate("WINGS_STATE", wingsState));
     }
 
-    public void deleteDatabase(TestCaseRunner runner) {
+    public void cleanDatabase(TestCaseRunner runner) {
         runner.$(sql(db)
                 .statement("DELETE FROM DUCK"));
 }

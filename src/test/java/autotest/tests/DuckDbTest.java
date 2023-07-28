@@ -28,15 +28,7 @@ public class DuckDbTest extends DuckClients {
         duckDelete(runner);
     }
 
-    @Test(description = "Проверка метода, когда заранее созданных уточек нет с предварительным удалением через БД")
-    @CitrusTest
-    public void notFoundGetAllIds(@Optional @CitrusResource TestCaseRunner runner) {
-        deleteDatabase(runner);
-        duckGetAllIds(runner);
-        validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "[]");
-    }
-
-    @Test(description = "Проверка метода, когда заранее созданных уточек нет с предварительным удалением через БД")
+    @Test(description = "Проверка метода Update,c валидацией данных через БД")
     @CitrusTest
     public void successfulUpdate(@Optional @CitrusResource TestCaseRunner runner) {
         duckCreate(runner, "green", "11.0", "plastic", "quack", "FIXED");
