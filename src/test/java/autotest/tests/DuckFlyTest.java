@@ -18,7 +18,7 @@ public class DuckFlyTest extends DuckClients{
         validateResponseFromBody(runner, yellowDuckService, HttpStatus.OK, "\"message\": \"I’m flying\"" );
         duckDelete(runner, "${duckId}");
     }
-
+// этот тест неверный - )
     @Test(description = "Проверка успешного взлета уточки с WingState = FIXED")
     @CitrusTest
     public void successfulNotFly(@Optional@CitrusResource TestCaseRunner runner) {
